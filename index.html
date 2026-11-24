@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물아일체 PILA-CARE | 임상별 맞춤 필라테스 스트레칭 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#f4f8f9] text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- 1. 상단 내비게이션 바 -->
+    <header class="bg-white border-b border-teal-100/80 px-4 md:px-8 py-3.5 md:py-4 sticky top-0 z-20">
+        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+            <button onclick="showHome()" class="flex items-center gap-2.5 md:gap-3 text-left group">
+                <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-gradient-to-br from-teal-500 to-sky-600 flex items-center justify-center text-white shadow-sm shrink-0">
+                    <i class="fa-solid fa-lungs text-xs md:text-sm"></i>
+                </div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg md:text-xl font-black tracking-tight text-[#1b365d] group-hover:text-teal-700 transition">물아일체 PILA-CARE</h1>
+                    <span class="text-xs font-semibold text-slate-500 border-l border-slate-200 pl-3 hidden sm:inline">물리치료학과 임상 스트레칭 가이드</span>
+                </div>
+            </button>
+
+            <nav>
+                <button id="nav-home-btn" onclick="showHome()" class="text-sm font-extrabold text-[#1b365d] hover:text-teal-700 px-3 py-1.5 rounded-lg transition">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                    <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                   </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2-A. [홈 화면] 배너 + 5개 임상 케이스 선택 카드 -->
+    <div id="home-view" class="flex-1 max-w-[1400px] w-full mx-auto px-4 md:px-6 pt-5 pb-6 md:pt-8 md:pb-8">
+        <!-- 히어로 배너 -->
+        <section class="rounded-[24px] md:rounded-[28px] bg-gradient-to-r from-[#dff4f2] via-[#e4f5f6] to-[#dceefa] border border-teal-100/80 px-5 py-6 md:px-10 md:py-12 mb-5 md:mb-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 shadow-sm">
+            <div class="max-w-xl">
+                <span class="inline-block text-xs font-extrabold text-teal-800 bg-white/80 px-3 py-1 rounded-full mb-3 border border-teal-200/60">
+                    기능해부학 기반 임상 맞춤 홈트레이닝
+                </span>
+                <h2 class="text-[22px] sm:text-3xl md:text-4xl font-black text-[#182b49] leading-snug tracking-tight break-keep">
+                    <span class="block text-[22px]  font-extrabold mb-1">
+                        아프기 전에, 바르게!<br>
+                        물리치료학과 1학년이 알려주는
+                    </span>
+                    임상별 맞춤 스트레칭
+                </h2>
+                <p class="text-xs sm:text-sm md:text-base font-medium text-slate-600 mt-3 md:mt-4 leading-relaxed break-keep">
+                    질환별 핵심 근육과 해부학적 원인을 먼저 이해하고, 단계별 맞춤 스트레칭과 안정화 운동을 안전하게 따라 해보세요.
+                </p>
+            </div>
+
+            <div class="shrink-0 hidden md:flex items-center justify-center bg-white/60 backdrop-blur-sm border border-white rounded-3xl p-8 shadow-sm">
+                <div class="text-center">
+                    <div class="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white flex items-center justify-center text-4xl shadow-md mb-3">
+                        🩺
+                    </div>
+                    <p class="text-sm font-extrabold text-[#182b49]">5대 핵심 임상 케이스</p>
+                    <p class="text-xs text-slate-500 mt-1">해부학 분석 · 단계별 운동 가이드</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5개 임상 케이스 카테고리 카드 그리드 -->
+        <section class="bg-white rounded-[24px] md:rounded-[28px] p-4 sm:p-5 md:p-8 border border-slate-200/70 shadow-sm">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <div>
+                    <h3 class="text-lg md:text-xl font-black text-[#182b49]">임상별 맞춤 스트레칭 카테고리</h3>
+                    <p class="text-xs font-medium text-slate-500 mt-1">관리하고 싶은 질환을 선택하면 해부학 분석과 단계별 운동 가이드를 확인할 수 있습니다.</p>
+                </div>
+            </div>
+
+            <div id="home-case-grid" class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-5"></div>
+        </section>
+    </div>
+
+    <!-- 2-B. [상세 학습 화면] 모바일: 상단 가로 메뉴 / PC: 좌측 사이드바 + 우측 본문 -->
+    <div id="detail-view" class="hidden flex-1 max-w-[1400px] w-full mx-auto">
+        <div class="flex flex-col lg:flex-row min-h-full">
+            <!-- [좌측/모바일 상단] 5개 임상 케이스 메뉴 -->
+            <aside class="w-full lg:w-[290px] shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-slate-200/80 p-4 lg:p-6 flex flex-col gap-2.5 lg:gap-3">
+                <button onclick="showHome()" class="w-full text-left px-3.5 py-2 lg:px-4 lg:py-2.5 rounded-xl bg-[#f0f9f9] hover:bg-teal-100/70 text-teal-800 text-xs font-extrabold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-house"></i> 홈 화면으로 돌아가기
+                </button>
+                <!-- 모바일에서는 가로 스크롤 카드로, PC에서는 세로 리스트로 표시 -->
+                <div id="sidebar-menu" class="flex flex-row lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible scrollbar-hide pb-1 lg:pb-0 [&>*]:shrink-0 [&>*]:w-44 lg:[&>*]:w-full"></div>
+            </aside>
+
+            <!-- [우측/모바일 하단] 메인 콘텐츠 영역 -->
+            <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 bg-[#f4f8f9]">
+                <!-- 케이스 제목 & 상단 탭 ([🧬 해부학 분석] + [동작 1..N]) -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-5 md:mb-6">
+                    <div>
+                        <span id="case-eng-badge" class="text-xs font-bold text-teal-700"></span>
+                        <h2 id="case-title" class="text-xl md:text-2xl font-black text-[#182b49]"></h2>
+                    </div>
+                    <div id="exercise-tabs" class="flex flex-wrap gap-1.5 sm:gap-2 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200/80 w-full sm:w-auto"></div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- TAB 0: [🧬 해부학 분석] 전용 화면                           -->
+                <!-- ========================================================= -->
+                <div id="anatomy-panel" class="hidden flex flex-col gap-5 md:gap-6">
+                    <!-- 1) 원인 섹션 -->
+                    <div class="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-7 shadow-sm flex flex-col gap-4">
+        <div>
+            <h3 class="text-xl md:text-2xl font-black text-[#182b49] tracking-tight">왜 이런 증상이 생길까요?</h3>
+            <h4 id="anatomy-subtitle" class="hidden text-sm md:text-base font-extrabold text-teal-700 mt-3"></h4>
+        </div>
+        <p id="anatomy-cause" class="text-sm sm:text-[15px] text-slate-700 font-medium leading-relaxed whitespace-pre-line"></p>
+        <div id="cause-images-grid" class="hidden pt-2 text-sm sm:text-[15px] text-slate-700 font-medium leading-relaxed"></div>
+    </div>
+
+    <!-- 2) 수축근육(🔴) & 이완근육(🔵) 분석 -->
+    <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/80">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <h3 class="text-xl md:text-2xl font-black text-[#182b49]">근육 불균형 분석</h3>
+            <div class="flex flex-wrap items-center gap-2 text-xs font-extrabold">
+                <span class="bg-rose-50 text-rose-700 border border-rose-200/80 px-2.5 sm:px-3 py-1 rounded-full">🔴 단축 근육(과긴장 근육)</span>
+                <span class="bg-sky-50 text-sky-700 border border-sky-200/80 px-2.5 sm:px-3 py-1 rounded-full">🔵 약화 근육(늘어난 근육)</span>
+            </div>
+        </div>
+        <p id="imbalance-summary" class="hidden text-sm sm:text-[15px] text-slate-700 font-medium mb-5 leading-relaxed whitespace-pre-line"></p>
+        <div id="imbalance-cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-4"></div>
+    </div>
+
+                    <!-- 하단 운동 시작하기 버튼 -->
+                    <div class="flex justify-end pt-1">
+                        <button onclick="selectExercise(0)" class="w-full sm:w-auto justify-center bg-[#1b365d] hover:bg-teal-800 text-white font-extrabold text-sm px-7 py-4 rounded-2xl shadow-md transition flex items-center gap-2">
+                            <span>지금 바로 스트레칭 시작할까요?</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- TAB 1~N: [동작 가이드] 화면                                 -->
+                <!-- ========================================================= -->
+                <div id="exercise-panel" class="hidden">
+                    <!-- 임상 배경 요약 배너 -->
+                    <div id="case-overview-box" class="bg-gradient-to-r from-[#e3f5f4] to-[#e6f2fb] border border-teal-200/70 rounded-2xl p-4 sm:p-5 mb-5 md:mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-5 shadow-sm">
+                        <div class="flex-1 flex flex-col items-start gap-2">
+                            <span class="bg-[#1b365d] text-white text-xs sm:text-sm font-extrabold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-lg">💡 왜 하나요?</span>
+                            <p id="case-overview" class="text-sm text-slate-700 font-medium leading-relaxed whitespace-pre-line"></p>
+                        </div>
+                        <div id="overview-image-box" class="hidden shrink-0 bg-white p-2 rounded-xl border border-teal-100 shadow-sm self-center">
+                            <img id="overview-image" src="" alt="참고 이미지" class="w-40 h-32 object-contain rounded-lg">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 md:gap-6">
+                        <!-- 왼쪽 8칸 -->
+                        <div class="col-span-12 lg:col-span-8 flex flex-col gap-5 md:gap-6">
+                            <!-- 1) 유튜브 동영상 플레이어 -->
+                            <div class="rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 aspect-video shadow-md border border-slate-200 relative">
+                                <iframe id="case-video" class="w-full h-full" src="" title="운동 가이드 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+
+                            <!-- 2) 동작 상세 설명 카드 -->
+                            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/70">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span id="step-badge" class="bg-teal-50 text-teal-700 border border-teal-200/60 px-3 py-1 rounded-lg text-xs font-bold">동작 1</span>
+                                    <span id="target-muscle" class="bg-slate-100 text-slate-600 px-3 py-1 rounded-lg text-xs font-bold"></span>
+                                </div>
+                                <h3 id="exercise-name" class="text-lg sm:text-xl font-black text-[#182b49] mt-3"></h3>
+                                <p id="exercise-duration" class="text-sm font-bold text-teal-700 mt-1"></p>
+                                <div id="exercise-guide" class="text-sm sm:text-[15px] font-semibold text-slate-800 mt-4 leading-relaxed bg-[#f7fbfb] p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5"></div>
+                            </div>
+
+                            <!-- 2-2) 자극부위(타겟 근육 상세) 카드 -->
+                            <div id="target-muscle-card" class="hidden bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/70 flex flex-col gap-5">
+                                <h4 class="text-base font-black text-[#182b49] flex items-center gap-1.5">🔥 타깃부위</h4>
+                                <div id="target-muscles-list" class="flex flex-col gap-6"></div>
+                            </div>
+
+                            <!-- 3) 참고 사진 카드 (올바른 자세 / 잘못된 자세 비교) -->
+                            <div id="image-card" class="hidden bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/70 flex flex-col gap-5 sm:gap-6">
+                                <!-- 올바른 자세 구역 -->
+                                <div id="good-posture-box" class="hidden border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col gap-3">
+                                    <h5 class="text-base font-extrabold text-[#1b365d] flex items-center gap-1.5">
+                                        <span>✅</span> 올바른 자세
+                                    </h5>
+                                    <div id="good-images-grid" class="grid gap-3"></div>
+                                    <p id="good-desc" class="hidden text-sm text-slate-700 bg-slate-50/50 p-3.5 sm:p-4 rounded-xl leading-relaxed whitespace-pre-line"></p>
+                                </div>
+
+                                <!-- 잘못된 자세 구역 -->
+                                <div id="bad-posture-box" class="hidden border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col gap-3">
+                                    <h5 class="text-base font-extrabold text-rose-700 flex items-center gap-1.5">
+                                        <span>❌</span> 잘못된 자세
+                                    </h5>
+                                    <div id="bad-images-grid" class="grid gap-3"></div>
+                                    <p id="bad-desc" class="hidden text-sm text-slate-700 bg-slate-50/50 p-3.5 sm:p-4 rounded-xl leading-relaxed whitespace-pre-line"></p>
+                                </div>
+                            </div>
+
+                            <!-- 3-2) 강화동작(심화 단계) 카드 -->
+                            <div id="adv-video-card" class="hidden bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/70 flex flex-col gap-4 sm:gap-5">
+                                <h5 class="text-base sm:text-[18px] font-extrabold text-slate-800 flex items-center gap-2">
+                                    ✋ 잠깐! 해당 동작이 너무 쉬워졌다면❓
+                                </h5>
+                                <div id="adv-video-wrapper" class="hidden rounded-2xl overflow-hidden bg-slate-900 aspect-video shadow-sm border border-slate-200">
+                                    <iframe id="adv-video" class="w-full h-full" src="" title="강화 동작 가이드 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                                <p id="adv-desc" class="hidden text-sm text-slate-700 bg-slate-50/50 p-3.5 sm:p-4 rounded-xl leading-relaxed whitespace-pre-line"></p>
+                            </div>
+
+                            <!-- 4) 일상생활 자세 교정 팁 (ADL Guide) -->
+                            <div id="adl-card" class="bg-[#eef8f7] border border-teal-200/80 rounded-3xl p-5 sm:p-6 shadow-sm">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="bg-teal-700 text-white px-2.5 py-0.5 rounded-md text-xs font-bold">Guide</span>
+                                    <h4 class="text-sm font-extrabold text-teal-950">
+                                        <i class="fa-solid fa-house-user mr-1.5 text-teal-700"></i>일상생활 자세 교정 팁
+                                    </h4>
+                                </div>
+                                <p class="text-xs text-teal-800 font-semibold mb-3">운동 외 시간에도 바른 정렬을 유지하기 위한 생활 습관 가이드입니다.</p>
+                                <div id="adl-guide" class="text-sm text-slate-800 bg-white/95 p-4 rounded-2xl border border-teal-100 leading-relaxed whitespace-pre-line"></div>
+                            </div>
+                        </div>
+
+                        <!-- 오른쪽 4칸: 주의사항 + 타이머 + 데일리 체크리스트 -->
+                        <div class="col-span-12 lg:col-span-4 flex flex-col gap-5 md:gap-6">
+                            <div class="bg-amber-50/90 border-l-4 border-amber-400 p-5 rounded-r-3xl shadow-sm">
+                                <p class="text-sm text-amber-900 font-extrabold mb-1">
+                                    <i class="fa-solid fa-triangle-exclamation mr-1.5 text-amber-500"></i> 주의사항
+                                </p>
+                                <p id="exercise-caution" class="text-xs text-amber-800 leading-relaxed whitespace-pre-line"></p>
+                            </div>
+
+                            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/70 flex flex-col items-center justify-center">
+                                <h4 class="text-xs font-bold text-slate-400 mb-1">동작 유지 타이머</h4>
+                                <span id="timer-display" class="text-4xl font-black text-[#1b365d] my-3">15초</span>
+                                <div class="flex gap-2 w-full">
+                                    <button id="timer-start-btn" onclick="startTimer()" class="flex-1 bg-[#1b365d] hover:bg-teal-800 text-white font-bold text-sm py-3 rounded-2xl transition shadow-sm">15초 시작</button>
+                                    <button onclick="resetTimer()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-sm py-3 rounded-2xl transition">초기화</button>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/70">
+                                <h4 class="text-xs font-bold text-slate-400 mb-4"><i class="fa-regular fa-calendar-check mr-1.5 text-teal-600"></i>데일리 홈트 체크리스트</h4>
+                                <div class="flex justify-between">
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">월</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">화</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">수</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">목</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">금</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">토</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                    <label class="flex flex-col items-center gap-2 cursor-pointer"><span class="text-xs text-slate-500 font-bold">일</span><input type="checkbox" class="w-4 h-4 rounded accent-teal-700"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+   <script>const allCases = {};</script>
+    <script src="case1.js"></script>
+    <script src="case2.js"></script>
+    <script src="case3.js"></script>
+    <script src="case4.js"></script>
+    <script src="case5.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+        window.scrollTo(0, 0);
+    </script>
+</body>
+</html>
