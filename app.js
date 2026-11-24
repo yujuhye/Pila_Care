@@ -208,8 +208,7 @@ function toYoutubeEmbedUrl(url) {
     }
 
     if (!videoId) return url;
-    // 자동재생 + 음소거 + 무한반복 + 하단 재생바 숨김으로 유튜브 UI 최소화
-    return `https://www.youtube-nocookie.com/embed/${videoId}?loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&playsinline=1`;
+    return `https://www.youtube.com/embed/${videoId}`;
 }
 
 function isYoutubeUrl(rawUrl) {
