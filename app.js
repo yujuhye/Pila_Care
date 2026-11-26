@@ -36,6 +36,15 @@ function getCaseImageSrc(item) {
     return null;
 }
 
+// iframe src 변경 시 브라우저 뒤로가기 기록이 오염되지 않도록 새 노드로 교체하는 함수
+function setIframeSrcSafely(iframeId, url) {
+    const oldIframe = document.getElementById(iframeId);
+    if (!oldIframe) return;
+    const newIframe = oldIframe.cloneNode(false);
+    newIframe.src = url || "";
+    oldIframe.replaceWith(newIframe);
+}
+
 function initApp() {
     const merged = getMergedCases();
 
@@ -102,32 +111,41 @@ function initApp() {
         `;
         menuContainer.appendChild(btn);
     });
+
+    // 초기 홈 상태 기록 (뒤로가기 기준점)
+    history.replaceState({ view: 'home' }, '', '');
 }
 
 function stopAllVideos() {
-    document.getElementById('case-video').src = "";
-    document.getElementById('adv-video').src = "";
+    setIframeSrcSafely('case-video', '');
+    setIframeSrcSafely('adv-video', '');
     document.querySelectorAll('#imbalance-cards-grid iframe, #cause-images-grid iframe').forEach(el => {
-        el.src = "";
+        const clone = el.cloneNode(false);
+        clone.src = "";
+        el.replaceWith(clone);
     });
 }
 
-function showHome() {
+function showHome(skipHistory = false) {
     clearInterval(timerInterval);
     stopAllVideos();
     document.getElementById('detail-view').classList.add('hidden');
     document.getElementById('home-view').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (!skipHistory) {
+        history.pushState({ view: 'home' }, '', '');
+    }
 }
 
-function openCaseFromHome(caseKey) {
+function openCaseFromHome(caseKey, skipHistory = false) {
     document.getElementById('home-view').classList.add('hidden');
     document.getElementById('detail-view').classList.remove('hidden');
-    selectCase(caseKey);
+    selectCase(caseKey, skipHistory);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectCase(caseKey) {
+function selectCase(caseKey, skipHistory = false) {
     currentCaseKey = caseKey;
     const merged = getMergedCases();
     const caseObj = merged.find(c => c.key === caseKey);
@@ -175,7 +193,7 @@ function selectCase(caseKey) {
         tabsContainer.appendChild(tabBtn);
     });
 
-    selectAnatomyTab();
+    selectAnatomyTab(skipHistory);
 }
 
 function setActiveTabButton(targetId) {
@@ -188,7 +206,7 @@ function setActiveTabButton(targetId) {
     }
 }
 
-// 유튜브 재생
+// 유튜브 재생 (기본 플레이어)
 function toYoutubeEmbedUrl(url) {
     if (!url) return "";
     let videoId = "";
@@ -221,7 +239,6 @@ function isLocalVideoUrl(rawUrl) {
     return /\.(mp4|webm|ogg)$/i.test(rawUrl.trim());
 }
 
-// 유튜브 잡다한 아이콘 안보이게
 function getYoutubeThumbUrl(url) {
     const embed = toYoutubeEmbedUrl(url);
     const match = embed.match(/\/embed\/([^?]+)/);
@@ -360,10 +377,14 @@ function renderMediaRows(mediaInput, imgMaxHeightClass = "max-h-60", maxPerRow =
     };
 }
 
-function selectAnatomyTab() {
+function selectAnatomyTab(skipHistory = false) {
     setActiveTabButton('tab-anatomy');
     clearInterval(timerInterval);
     stopAllVideos();
+
+    if (!skipHistory) {
+        history.pushState({ view: 'detail', caseKey: currentCaseKey, tab: 'anatomy' }, '', '');
+    }
 
     document.getElementById('case-title').classList.add('hidden');
     document.getElementById('case-eng-badge').classList.add('hidden');
@@ -451,14 +472,19 @@ function selectAnatomyTab() {
     }
 }
 
-function selectExercise(exIndex) {
+function selectExercise(exIndex, skipHistory = false) {
     const merged = getMergedCases();
     const caseObj = merged.find(c => c.key === currentCaseKey);
     if (!caseObj || !caseObj.exercises[exIndex]) return;
 
+    if (!skipHistory) {
+        history.pushState({ view: 'detail', caseKey: currentCaseKey, tab: exIndex }, '', '');
+    }
+
     setActiveTabButton('tab-ex-' + exIndex);
     stopAllVideos();
-    document.getElementById('case-title').classList.remove('hidden'); 
+    document.getElementById('case-title').classList.remove('hidden');
+    document.getElementById('case-eng-badge').classList.remove('hidden');
     document.getElementById('anatomy-panel').classList.add('hidden');
     document.getElementById('exercise-panel').classList.remove('hidden');
 
@@ -563,8 +589,8 @@ function selectExercise(exIndex) {
         adlEl.innerHTML = formatRichText("• 스마트폰 및 모니터 화면을 눈높이에 맞춰 고개가 앞으로 빠지지 않게 유지하세요.\n• 의자에 앉을 때는 양쪽 좌골(엉덩이 뼈)에 체중을 균등하게 싣고 다리를 꼬지 않습니다.\n• 한 시간마다 일어나 가볍게 기지개를 켜며 흉곽과 목 주변 근육의 긴장을 풀어주세요.");
     }
 
-    // 메인 유튜브 영상
-    document.getElementById('case-video').src = toYoutubeEmbedUrl(ex.video);
+    // 메인 유튜브 영상 (뒤로가기 기록 오염 방지를 위해 iframe 교체 방식으로 적용)
+    setIframeSrcSafely('case-video', toYoutubeEmbedUrl(ex.video));
 
     // 올바른 자세 / 잘못된 자세 비교
     const imageCard = document.getElementById('image-card');
@@ -616,7 +642,6 @@ function selectExercise(exIndex) {
     // 강화동작 영상 및 설명글
     const advVideoCard = document.getElementById('adv-video-card');
     const advVideoWrapper = document.getElementById('adv-video-wrapper');
-    const advVideoEl = document.getElementById('adv-video');
     const advDescEl = document.getElementById('adv-desc');
 
     const advEmbedUrl = toYoutubeEmbedUrl(ex.advVideo);
@@ -624,10 +649,10 @@ function selectExercise(exIndex) {
 
     if (advEmbedUrl !== "" || hasAdvDesc) {
         if (advEmbedUrl !== "") {
-            advVideoEl.src = advEmbedUrl;
+            setIframeSrcSafely('adv-video', advEmbedUrl);
             advVideoWrapper.classList.remove('hidden');
         } else {
-            advVideoEl.src = "";
+            setIframeSrcSafely('adv-video', '');
             advVideoWrapper.classList.add('hidden');
         }
 
@@ -640,7 +665,7 @@ function selectExercise(exIndex) {
         }
         advVideoCard.classList.remove('hidden');
     } else {
-        advVideoEl.src = "";
+        setIframeSrcSafely('adv-video', '');
         advDescEl.innerHTML = "";
         advVideoWrapper.classList.add('hidden');
         advDescEl.classList.add('hidden');
@@ -649,6 +674,7 @@ function selectExercise(exIndex) {
 
     currentTargetSeconds = ex.timerSeconds || caseObj.timerSeconds || 15;
     resetTimer();
+    window.scrollTo(0, 0);
 }
 
 function startTimer() {
@@ -672,5 +698,24 @@ function resetTimer() {
     document.getElementById('timer-display').innerText = currentTargetSeconds + "초";
     document.getElementById('timer-start-btn').innerText = currentTargetSeconds + "초 시작";
 }
+
+// 브라우저/스마트폰 뒤로가기 버튼 감지
+window.addEventListener('popstate', (event) => {
+    const state = event.state;
+    if (!state || state.view === 'home') {
+        showHome(true);
+    } else if (state.view === 'detail') {
+        document.getElementById('home-view').classList.add('hidden');
+        document.getElementById('detail-view').classList.remove('hidden');
+        if (currentCaseKey !== state.caseKey) {
+            selectCase(state.caseKey, true);
+        }
+        if (state.tab === 'anatomy') {
+            selectAnatomyTab(true);
+        } else if (typeof state.tab === 'number') {
+            selectExercise(state.tab, true);
+        }
+    }
+});
 
 window.addEventListener('DOMContentLoaded', initApp);
